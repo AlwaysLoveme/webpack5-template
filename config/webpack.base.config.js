@@ -1,12 +1,11 @@
 const Webpack = require("webpack");
 const { resolve } = require("path");
 const WebpackBar = require("webpackbar");
-const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
-  entry: resolve(__dirname, "../src/index.ts"),
+  entry: resolve(__dirname, "../src/index.tsx"),
   output: {
     path: resolve(__dirname, "../dist"),
     clean: true,
@@ -16,10 +15,21 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
       "@": resolve(__dirname, "../src/"),
-      vue: resolve(__dirname, "../node_modules/vue/dist/vue.cjs.prod.js"),
-      "vue-router": resolve(
+      react: resolve(
         __dirname,
-        "../node_modules/vue-router/dist/vue-router.cjs.prod.js"
+        `../node_modules/react/umd/react.${
+          process.env.NODE_ENV === "production"
+            ? "production.min"
+            : "development"
+        }.js`,
+      ),
+      "react-dom": resolve(
+        __dirname,
+        `../node_modules/react-dom/umd/react-dom.${
+          process.env.NODE_ENV === "production"
+            ? "production.min"
+            : "development"
+        }.js`,
       ),
     },
     symlinks: false,
@@ -29,7 +39,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js/,
+        test: /\.(js|jsx)/,
         exclude: /node_modules/,
         use: [
           "thread-loader",
@@ -41,6 +51,7 @@ module.exports = {
               cacheDirectory: true,
             },
           },
+          "eslint-loader",
         ],
       },
       {
@@ -54,15 +65,6 @@ module.exports = {
           },
         ],
         exclude: /node_modules/,
-      },
-      {
-        test: /\.vue$/,
-        use: [
-          {
-            loader: "vue-loader",
-            options: {},
-          },
-        ],
       },
     ],
   },
@@ -79,7 +81,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: resolve(__dirname, "../public/index.html"),
       filename: "index.html",
-      title: "webpack5",
+      title: "webpack5-react",
       hash: true, // 为CSS文件和JS文件引入时，添加唯一的hash，破环缓存非常有用
       minify: {
         // 移除空格
@@ -89,6 +91,5 @@ module.exports = {
       },
     }),
     new ForkTsCheckerWebpackPlugin(),
-    new VueLoaderPlugin(),
   ],
 };
