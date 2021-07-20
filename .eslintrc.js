@@ -1,26 +1,51 @@
 module.exports = {
-  root: true,
   env: {
+    browser: true,
+    es2021: true,
     node: true,
   },
+  extends: [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+  ],
   parser: "@typescript-eslint/parser",
-  extends: ["airbnb", "plugin:@typescript-eslint/recommended"],
   parserOptions: {
     ecmaFeatures: {
-      impliedStrict: true,
       jsx: true,
     },
-    ecmaVersion: 2020,
+    ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"], // 定义了该eslint文件所依赖的插件
+  plugins: [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+  ],
+  settings: {
+    "import/resolver": {
+      typescript: {},
+    },
+  },
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-explicit-any": "off",
     quotes: [1, "double"],
-    "import/no-extraneous-dependencies": "off",
-    "import/order": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "react/jsx-filename-extension": ["warn", { extensions: [".tsx"] }],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        allowExpressions: true,
+      },
+    ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        ts: "never",
+        tsx: "never",
+      },
+    ],
   },
 };

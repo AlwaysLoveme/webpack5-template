@@ -1,9 +1,5 @@
-import React from 'react';
+import React, { FC } from "react";
 import "./App.less";
 
-const App: React.FC = () => {
-  return (
-    <div>APP</div>
-  )
-};
+const App: FC = () => <div>APP</div>;
 export default App;
