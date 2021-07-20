@@ -4,13 +4,16 @@ const { merge: webpackMerge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
+
 const cssLoaders = [
   MiniCssExtractPlugin.loader, // 抽离css到单独的文件中
   "css-loader",
   "postcss-loader",
 ];
 
-module.exports = webpackMerge(baseConfig, {
+const webpackProdConfig = webpackMerge(baseConfig, {
   mode: "production",
   target: "browserslist",
   output: {
@@ -84,3 +87,5 @@ module.exports = webpackMerge(baseConfig, {
     ],
   },
 });
+
+module.exports = smp.wrap(webpackProdConfig);

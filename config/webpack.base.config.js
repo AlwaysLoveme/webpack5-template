@@ -32,11 +32,13 @@ module.exports = {
         test: /\.js/,
         exclude: /node_modules/,
         use: [
+          "thread-loader",
           {
-            loader: "babel-loader?cacheDirectory=true",
+            loader: "babel-loader",
             options: {
               // 只对src目录下的文件使用babel-loader处理，可以缩小命中范围
               include: resolve(__dirname, "../src"),
+              cacheDirectory: true,
             },
           },
         ],
@@ -77,7 +79,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: resolve(__dirname, "../public/index.html"),
       filename: "index.html",
-      title: "vue3-webpack",
+      title: "webpack5",
       hash: true, // 为CSS文件和JS文件引入时，添加唯一的hash，破环缓存非常有用
       minify: {
         // 移除空格
@@ -86,7 +88,7 @@ module.exports = {
         removeComments: true,
       },
     }),
-    new VueLoaderPlugin(),
     new ForkTsCheckerWebpackPlugin(),
+    new VueLoaderPlugin(),
   ],
 };

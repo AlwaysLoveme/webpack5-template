@@ -1,25 +1,26 @@
 <template>
-  <div>首页13</div>
+  <div>
+    <button><router-link to="/about">TO ABOUT</router-link></button>
+  </div>
   <img src="@/assets/beer-zone.png" alt="" width="100%" />
   <i class="fas fa-address-book"></i>
   <i class="fas fa-arrow-right"></i>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   setup() {
-    return {};
+    const md = ref();
+    const textarea = ref();
+
+    return {
+      md,
+      textarea,
+    };
   },
 });
 </script>
 
-<style scoped lang="less">
-div {
-  line-height: 42px;
-  img {
-    width: 100%;
-  }
-}
-</style>
+<style scoped lang="less"></style>

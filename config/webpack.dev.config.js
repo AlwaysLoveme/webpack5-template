@@ -1,9 +1,12 @@
 const Webpack = require("webpack");
 const baseConfig = require("./webpack.base.config");
 const { merge: webpackMerge } = require("webpack-merge");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin({ disable: true });
 
 const cssLoaders = ["style-loader", "css-loader", "postcss-loader"];
-module.exports = webpackMerge(baseConfig, {
+
+const webpackDevConfig = webpackMerge(baseConfig, {
   mode: "development",
   target: "web",
   output: {
@@ -17,24 +20,21 @@ module.exports = webpackMerge(baseConfig, {
     historyApiFallback: true,
     host: "0.0.0.0",
     bonjour: true,
-    quiet: true,
+    quiet: false,
     overlay: {
-      warnings: true,
+      warnings: false,
       errors: true,
     },
     port: 9527,
     hot: true,
     stats: "errors-only",
     useLocalIp: true,
+    clientLogLevel: "silent",
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [...cssLoaders],
-      },
-      {
-        test: /\.less$/,
+        test: /\.(c|le)ss$/,
         use: [
           ...cssLoaders,
           {
@@ -59,3 +59,5 @@ module.exports = webpackMerge(baseConfig, {
   },
   plugins: [new Webpack.HotModuleReplacementPlugin()],
 });
+
+module.exports = smp.wrap(webpackDevConfig);
