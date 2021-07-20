@@ -39,12 +39,15 @@ module.exports = {
       },
     ],
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "import/no-extraneous-dependencies": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
       {
         ts: "never",
         tsx: "never",
+        js: "never",
       },
     ],
   },

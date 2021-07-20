@@ -1,7 +1,7 @@
 const Webpack = require("webpack");
-const baseConfig = require("./webpack.base.config");
 const { merge: webpackMerge } = require("webpack-merge");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const baseConfig = require("./webpack.base.config");
 
 const smp = new SpeedMeasurePlugin({ disable: true });
 
