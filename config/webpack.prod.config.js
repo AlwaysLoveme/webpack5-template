@@ -5,11 +5,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
+const smp = new SpeedMeasurePlugin({ disable: true });
 
 const cssLoaders = [
   MiniCssExtractPlugin.loader, // 抽离css到单独的文件中
-  "css-loader",
+  {
+    loader: "css-loader",
+    options: {
+      importLoaders: 2,
+    },
+  },
   "postcss-loader",
 ];
 

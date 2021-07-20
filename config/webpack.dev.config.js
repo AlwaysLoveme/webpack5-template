@@ -4,7 +4,16 @@ const { merge: webpackMerge } = require("webpack-merge");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin({ disable: true });
 
-const cssLoaders = ["style-loader", "css-loader", "postcss-loader"];
+const cssLoaders = [
+  "style-loader",
+  {
+    loader: "css-loader",
+    options: {
+      importLoaders: 2,
+    },
+  },
+  "postcss-loader",
+];
 
 const webpackDevConfig = webpackMerge(baseConfig, {
   mode: "development",
