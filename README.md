@@ -1,6 +1,5 @@
 # webpack5-template
-使用Webpack5+Typescript构建的vue3.0/React应用程序，仅供学习Webpack5进行参考。
-  
+使用Webpack5+Typescript构建的vue3.0/React应用程序，仅供学习Webpack5进行参考。   
 默认main分支为Vue3.0，react分支为React
 
 该示例集成了Less、Typescript、Eslint、FontAwesome字体图标，支持热更新，Webpack5编译速度更快。
