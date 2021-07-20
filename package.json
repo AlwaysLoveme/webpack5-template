@@ -77,7 +77,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "after-commit": "npm run version"
+      "post-push": "npm run version"
     }
   },
   "lint-staged": {
