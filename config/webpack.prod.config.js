@@ -92,6 +92,10 @@ const webpackProdConfig = webpackMerge(baseConfig, {
         },
       }),
     ],
+    splitChunks: {
+      // 分割所有类型的 chunk
+      chunks: "all",
+    },
   },
 });
 
