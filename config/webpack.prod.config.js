@@ -76,10 +76,17 @@ const webpackProdConfig = webpackMerge(baseConfig, {
       // js 压缩
       new TerserPlugin({
         parallel: true, // 可省略，默认开启并行
+        //删除注释
+        extractComments: true,
         terserOptions: {
           toplevel: true, // 最高级别，删除无用代码
           ie8: true,
           safari10: true,
+          compress: {
+            // 生产环境去除console
+            drop_console: true,
+            drop_debugger: true,
+          },
         },
       }),
       // 压缩css
@@ -90,6 +97,10 @@ const webpackProdConfig = webpackMerge(baseConfig, {
         },
       }),
     ],
+    splitChunks: {
+      // 分割所有类型的 chunk
+      chunks: "all",
+    },
   },
 });
 
