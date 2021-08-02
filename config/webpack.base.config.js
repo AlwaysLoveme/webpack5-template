@@ -5,6 +5,8 @@ const tsImportPluginFactory = require("ts-import-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
+const { library } = require("./library-import");
+
 module.exports = {
   entry: resolve(__dirname, "../src/index.tsx"),
   output: {
@@ -63,11 +65,7 @@ module.exports = {
               transpileOnly: true,
               getCustomTransformers: () => ({
                 before: [
-                  tsImportPluginFactory({
-                    libraryName: "antd",
-                    libraryDirectory: "lib",
-                    style: true,
-                  }),
+                  tsImportPluginFactory(library),
                 ],
               }),
               compilerOptions: {
