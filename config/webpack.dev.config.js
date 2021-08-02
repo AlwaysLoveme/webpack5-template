@@ -1,19 +1,8 @@
 const Webpack = require("webpack");
 const baseConfig = require("./webpack.base.config");
 const { merge: webpackMerge } = require("webpack-merge");
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin({ disable: true });
 
-const cssLoaders = [
-  "style-loader",
-  {
-    loader: "css-loader",
-    options: {
-      importLoaders: 2,
-    },
-  },
-  "postcss-loader",
-];
+const cssLoaders = ["style-loader", "css-loader", "postcss-loader"];
 
 const webpackDevConfig = webpackMerge(baseConfig, {
   mode: "development",
@@ -43,7 +32,11 @@ const webpackDevConfig = webpackMerge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.(c|le)ss$/,
+        test: /\.css$/,
+        use: [...cssLoaders],
+      },
+      {
+        test: /\.less$/,
         use: [
           ...cssLoaders,
           {
@@ -69,4 +62,4 @@ const webpackDevConfig = webpackMerge(baseConfig, {
   plugins: [new Webpack.HotModuleReplacementPlugin()],
 });
 
-module.exports = smp.wrap(webpackDevConfig);
+module.exports = webpackDevConfig;

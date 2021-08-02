@@ -3,6 +3,7 @@ const { resolve } = require("path");
 const WebpackBar = require("webpackbar");
 const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const tsImportPluginFactory = require("ts-import-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
@@ -16,11 +17,11 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
     alias: {
       "@": resolve(__dirname, "../src/"),
-      vue: resolve(__dirname, "../node_modules/vue/dist/vue.cjs.prod.js"),
-      "vue-router": resolve(
-        __dirname,
-        "../node_modules/vue-router/dist/vue-router.cjs.prod.js"
-      ),
+      // vue: resolve(__dirname, "../node_modules/vue/dist/vue.cjs.prod.js"),
+      // "vue-router": resolve(
+      //   __dirname,
+      //   "../node_modules/vue-router/dist/vue-router.cjs.prod.js"
+      // ),
     },
     symlinks: false,
     // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
@@ -29,10 +30,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          "thread-loader",
+          {
+            loader: "thread-loader",
+            options: {
+              workers: 3,
+            },
+          },
           {
             loader: "babel-loader",
             options: {
@@ -45,14 +51,22 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              transpileOnly: true,
-            },
+        loader: "ts-loader",
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: "ant-design-vue",
+                libraryDirectory: "lib",
+                style: true,
+              }),
+            ],
+          }),
+          compilerOptions: {
+            module: "es2015",
           },
-        ],
+        },
         exclude: /node_modules/,
       },
       {
