@@ -14,4 +14,9 @@ module.exports = {
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
   ],
+  env: {
+    development: {
+      plugins: ["dynamic-import-node", { noInterop: true }],
+    },
+  },
 };

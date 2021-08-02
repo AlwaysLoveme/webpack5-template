@@ -1,6 +1,7 @@
 const Webpack = require("webpack");
 const { resolve } = require("path");
 const WebpackBar = require("webpackbar");
+const tsImportPluginFactory = require("ts-import-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
@@ -39,7 +40,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)/,
+        test: /\.js/,
         exclude: /node_modules/,
         use: [
           "thread-loader",
@@ -51,7 +52,6 @@ module.exports = {
               cacheDirectory: true,
             },
           },
-          "eslint-loader",
         ],
       },
       {
@@ -61,6 +61,18 @@ module.exports = {
             loader: "ts-loader",
             options: {
               transpileOnly: true,
+              getCustomTransformers: () => ({
+                before: [
+                  tsImportPluginFactory({
+                    libraryName: "antd",
+                    libraryDirectory: "lib",
+                    style: true,
+                  }),
+                ],
+              }),
+              compilerOptions: {
+                module: "es2015",
+              },
             },
           },
         ],
