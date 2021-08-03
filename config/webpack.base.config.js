@@ -17,9 +17,9 @@ module.exports = {
     alias: {
       "@": resolve(__dirname, "../src/"),
     },
-    // symlinks: false,
+    symlinks: false,
     // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
-    // modules: [resolve(__dirname, "../node_modules")],
+    modules: [resolve(__dirname, "../node_modules")],
   },
   module: {
     rules: [
