@@ -1,6 +1,8 @@
 const Webpack = require("webpack");
+const { resolve } = require("path");
 const baseConfig = require("./webpack.base.config");
 const { merge: webpackMerge } = require("webpack-merge");
+const FriendlyErrorsWebpackPlugin = require("@soda/friendly-errors-webpack-plugin");
 
 const cssLoaders = ["style-loader", "css-loader", "postcss-loader"];
 
@@ -28,6 +30,11 @@ const webpackDevConfig = webpackMerge(baseConfig, {
     stats: "errors-only",
     useLocalIp: true,
     clientLogLevel: "silent",
+  },
+  resolve: {
+    alias: {
+      vue: resolve(__dirname, "../node_modules/vue/dist/vue.esm-browser.js"),
+    },
   },
   module: {
     rules: [
@@ -59,7 +66,15 @@ const webpackDevConfig = webpackMerge(baseConfig, {
       },
     ],
   },
-  plugins: [new Webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new Webpack.HotModuleReplacementPlugin(),
+    new FriendlyErrorsWebpackPlugin({
+      compilerSuccessInfo: {
+        messages: ["You application is running here http://localhost:3000"],
+        notes: ["成功编译后显示的一些附加说明"],
+      },
+    }),
+  ],
 });
 
 module.exports = webpackDevConfig;

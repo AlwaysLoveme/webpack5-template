@@ -1,4 +1,5 @@
 const Webpack = require("webpack");
+const { resolve } = require("path");
 const baseConfig = require("./webpack.base.config");
 const TerserPlugin = require("terser-webpack-plugin");
 const { merge: webpackMerge } = require("webpack-merge");
@@ -27,6 +28,14 @@ const webpackProdConfig = webpackMerge(baseConfig, {
     chunkFilename: "js/[name].[chunkhash].js",
   },
   devtool: "nosources-source-map",
+  resolve: {
+    alias: {
+      vue: resolve(
+        __dirname,
+        "../node_modules/vue/dist/vue.esm-browser.prod.js"
+      ),
+    },
+  },
   module: {
     rules: [
       {

@@ -4,29 +4,30 @@ module.exports = {
       "@babel/preset-env",
       {
         targets: {
-          browsers: ["last 2 versions"], // 最近 2 个版本的浏览器
+          browsers: ["last 2 versions", "Firefox ESR", "> 1%", "not ie 11"], // 最近 2 个版本的浏览器
         },
-        useBuiltIns: "usage", // 按需引入 polyfill
-        corejs: 3,
       },
     ],
     [
       "@babel/preset-typescript", // 引用Typescript插件
       {
-        allExtensions: true, // 支持所有文件扩展名，否则在vue文件中使用ts会报错
+        allExtensions: true, // 支持所有文件扩展
       },
     ],
   ],
   plugins: [
     [
-      "@babel/plugin-transform-runtime",
+      "import",
       {
-        corejs: {
-          version: 3,
-          proposals: true,
-        },
+        libraryName: "ant-design-vue",
+        libraryDirectory: "lib",
+        style: true,
       },
     ],
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-class-properties",
   ],
 };
