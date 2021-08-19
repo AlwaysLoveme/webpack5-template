@@ -11,10 +11,8 @@ export default defineComponent({
   components: {},
 
   setup() {
-    alert(JSON.stringify(window.location));
     const router = useRouter();
     const back = () => router.back();
-
     return {
       back,
       location: window.location,
