@@ -1,5 +1,6 @@
 <template>
   <a-button type="primary" @click="back">BACK</a-button>
+  <p>{{ location }}</p>
 </template>
 
 <script lang="ts">
@@ -10,11 +11,13 @@ export default defineComponent({
   components: {},
 
   setup() {
+    alert(JSON.stringify(window.location));
     const router = useRouter();
     const back = () => router.back();
 
     return {
       back,
+      location: window.location,
     };
   },
 });
