@@ -72,12 +72,13 @@
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
+    "webpack-env": "^0.8.0",
     "webpack-merge": "^5.8.0",
     "webpackbar": "^5.0.0-3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "ant-design-vue": "^2.2.6",
+    "ant-design-vue": "^2.2.8",
     "lodash": "^4.17.21",
     "vconsole": "^3.9.1",
     "vue": "^3.2.4",

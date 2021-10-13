@@ -23,6 +23,7 @@ module.exports = {
         libraryDirectory: "lib",
         style: true,
       },
+      "ant-design-vue",
     ],
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-optional-chaining",
