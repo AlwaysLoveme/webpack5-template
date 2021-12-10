@@ -5,6 +5,23 @@ const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
+function ThreadLoaderOptions() {
+  const threadLoaderOptions = {
+    workers: 4,
+    workerParallelJobs: 50,
+    poolTimeout: Infinity,
+    poolParallelJobs: 200,
+  };
+  // 生产环境/beta设置有效值
+  if (
+    process.env.NODE_ENV === "production" ||
+    process.env.NODE_ENV === "beta"
+  ) {
+    threadLoaderOptions.poolTimeout = 4000;
+  }
+  return threadLoaderOptions;
+}
+
 module.exports = {
   entry: resolve(__dirname, "../src/index.ts"),
   output: {
@@ -38,13 +55,12 @@ module.exports = {
           {
             loader: "thread-loader",
             options: {
-              workers: 3,
+              ...ThreadLoaderOptions(),
             },
           },
           {
             loader: "babel-loader",
             options: {
-              // 只对src目录下的文件使用babel-loader处理，可以缩小命中范围
               include: resolve(__dirname, "../src"),
               cacheDirectory: true,
             },
@@ -57,7 +73,6 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              // 只对src目录下的文件使用babel-loader处理，可以缩小命中范围
               include: resolve(__dirname, "../src"),
               cacheDirectory: true,
             },

@@ -13,7 +13,9 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "keywords": [
-    "webpack5"
+    "webpack5",
+    "vue3",
+    "RMS"
   ],
   "author": "zhuxian",
   "license": "MIT",
